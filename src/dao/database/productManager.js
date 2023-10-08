@@ -60,4 +60,33 @@ export default class ProductManager {
       console.log('Error updating product', error);
     }
   }
+
+  async pageProducts(modelQuery, modelLimit, modelPage, modelSort) {
+    try {
+      const products = await productsModel.paginate(modelQuery, {
+        limit: modelLimit,
+        page: modelPage,
+        sort: modelSort,
+        lean: true,
+      });
+
+      const response = {
+        status: 'success',
+        payload: products.docs,
+        totalDocs: products.totalDocs,
+        limit: products.limit,
+        totalPages: products.totalPages,
+        page: products.page,
+        pagingCounter: products.pagingCounter,
+        hasPrevPage: products.hasPrevPage,
+        hasNextPage: products.hasNextPage,
+        prevPage: products.prevPage,
+        nextPage: products.nextPage,
+      };
+      return response;
+    } catch (error) {
+      console.error('Error en la función pageProducts:', error);
+      throw error;
+    }
+  }
 }

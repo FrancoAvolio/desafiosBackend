@@ -7,8 +7,13 @@ const cartSchema = new mongoose.Schema({
     {
       id: String,
       quantity: Number,
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'products',
+      },
     },
   ],
+  default: [],
 });
 
 const cartModel = mongoose.model(cartCollection, cartSchema);
