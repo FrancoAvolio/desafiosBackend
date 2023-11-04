@@ -1,22 +1,22 @@
-import { cartModel } from '../models/cart.model.js';
+import cartModel from '../dao/models/cart.model.js';
 
-export default class CartManager {
-  async getAllCarts() {
+export default class CartService {
+  async getAllCartsService() {
     const carts = await cartModel.find().lean();
     return carts;
   }
 
-  async addCart(cart) {
+  async addCartService(cart) {
     const newCart = await cartModel.create(cart);
     return newCart.id;
   }
 
-  async getCartById(cid) {
+  async getCartByIdService(cid) {
     const cart = await cartModel.find({ _id: cid });
     return cart;
   }
 
-  async getProductInCart(cid) {
+  async getProductInCartService(cid) {
     const cart = await this.getCartById(cid);
 
     if (cart) {
@@ -27,7 +27,7 @@ export default class CartManager {
     }
   }
 
-  async addProductToCart(cid, pid, quantity) {
+  async addProductToCartService(cid, pid, quantity) {
     try {
       const cartFind = await cartModel.findOne({ _id: cid });
 
@@ -57,7 +57,7 @@ export default class CartManager {
   }
 
   //Eliminar producto seleccionado del carrito
-  async deleteProductOfCart(cid, pid) {
+  async deleteProductOfCartService(cid, pid) {
     try {
       const result = await cartModel.findOneAndUpdate(
         { _id: cid },
@@ -75,7 +75,7 @@ export default class CartManager {
   }
 
   //Actualizar array de productos
-  async updateCart(cid, updateData) {
+  async updateCartService(cid, updateData) {
     try {
       const data = await cartModel.updateOne({ _id: cid }, updateData);
       return data;
@@ -85,7 +85,7 @@ export default class CartManager {
   }
 
   //Actualizar cantidad de productos del carrito
-  async updateProductQuantity(cid, pid, quantity) {
+  async updateProductQuantityService(cid, pid, quantity) {
     try {
       const cart = await cartModel.findById(cid);
 
@@ -111,7 +111,7 @@ export default class CartManager {
   }
 
   //Vaciar carrito
-  async emptyCart(cid) {
+  async emptyCartService(cid) {
     try {
       const cartFind = await cartModel.findOne({ _id: cid });
 

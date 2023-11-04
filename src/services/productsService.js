@@ -1,7 +1,7 @@
-import { productsModel } from '../models/product.model.js';
+import productsModel from '../dao/models/product.model.js';
 
-export default class ProductManager {
-  async addProduct(
+export default class productsService {
+  async addProductSevice(
     title,
     description,
     category,
@@ -33,17 +33,17 @@ export default class ProductManager {
     }
   }
 
-  async getProducts() {
+  async getProductsService() {
     const data = await productsModel.find().lean();
     return data;
   }
 
-  async getProductsById(id) {
+  async getProductsByIdService(id) {
     const data = await productsModel.find({ _id: id }).lean();
     return data;
   }
 
-  async deleteProducts(pid) {
+  async deleteProductsService(pid) {
     try {
       const data = await productsModel.deleteOne({ _id: pid });
       return data;
@@ -52,7 +52,7 @@ export default class ProductManager {
     }
   }
 
-  async updateProducts(pid, updateData) {
+  async updateProductsService(pid, updateData) {
     try {
       const data = await productsModel.updateOne({ _id: pid }, updateData);
       return data;
@@ -61,7 +61,7 @@ export default class ProductManager {
     }
   }
 
-  async pageProducts(modelQuery, modelLimit, modelPage, modelSort) {
+  async pageProductsService(modelQuery, modelLimit, modelPage, modelSort) {
     try {
       const products = await productsModel.paginate(modelQuery, {
         limit: modelLimit,
